@@ -1,11 +1,22 @@
 const express = require("express");
-const cookies = require("./cookies");
+let cookies = require("./cookies");
 
 const app = express();
 
 const cors = require("cors");
 
 app.use(cors());
+
+app.delete("/cookies/:cookieId", async (req, res) => {
+  const { cookieId } = req.params;
+  const foundCookie = cookies.find((cookie) => cookie.id === +cookieId);
+  if (foundCookie) {
+    cookies = cookies.filter((cookie) => cookie !== foundCookie);
+    res.status(204).end();
+  } else {
+    res.status(404).json({ message: "Cookie not found" });
+  }
+});
 
 app.get("/cookies", (req, res) => {
   res.json(cookies);
