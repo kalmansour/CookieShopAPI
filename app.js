@@ -1,4 +1,7 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const slugify = require("slugify");
+
 let cookies = require("./cookies");
 
 const app = express();
@@ -6,6 +9,15 @@ const app = express();
 const cors = require("cors");
 
 app.use(cors());
+app.use(bodyParser.json());
+
+app.post("/cookies", (req, res) => {
+  const id = cookies[cookies.length - 1].id + 1;
+  const slug = slugify(req.body.name, { lower: true });
+  const newCookie = { id, slug, ...req.body }; // id, slug are equivalent to id: id, slug: slug
+  cookies.push(newCookie);
+  res.status(201).json(newCookie);
+});
 
 app.delete("/cookies/:cookieId", async (req, res) => {
   const { cookieId } = req.params;
