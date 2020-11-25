@@ -1,21 +1,26 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
-const slugify = require("slugify");
+const cookieRoutes = require("./routes/cookies");
+const db = require("./db/models");
 
 const app = express();
-const cors = require("cors");
-const cookieRoutes = require("./routes/cookies");
 
 //Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use("/cookies", cookieRoutes);
 
-app.get("/", (req, res) => {
-  console.log("HELLO");
-  res.json({ message: "Hello World" });
-});
+const run = async () => {
+  try {
+    await db.sequelize.authenticate();
+    console.log("Connection to the database successful!");
+    await app.listen(8000, () => {
+      console.log("The application is running on localhost:8000");
+    });
+  } catch (error) {
+    console.error("Error connecting to the database: ", error);
+  }
+};
 
-app.listen(8000, () => {
-  console.log("The application is running on localhost:8000");
-});
+run();
