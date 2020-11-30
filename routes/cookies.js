@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const upload = require("../middleware/multer");
 
 const {
   cookieCreate,
@@ -30,9 +31,9 @@ router.get("/", cookieList);
 router.delete("/:cookieId", cookieDelete);
 
 // Cookie Create
-router.post("/", cookieCreate);
+router.post("/", upload.single("image"), cookieCreate);
 
 // Cookie Update
-router.put("/:cookieId", cookieUpdate);
+router.put("/:cookieId", upload.single("image"), cookieUpdate);
 
 module.exports = router;
