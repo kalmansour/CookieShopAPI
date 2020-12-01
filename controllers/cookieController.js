@@ -1,5 +1,5 @@
 let cookies = require("../cookies");
-const { Cookie } = require("../db/models");
+const { Bakery, Cookie } = require("../db/models");
 const slugify = require("slugify");
 const { response } = require("express");
 
@@ -12,22 +12,16 @@ exports.fetchCookie = async (cookieId, next) => {
   }
 };
 
-exports.cookieCreate = async (req, res, next) => {
-  try {
-    if (req.file) {
-      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
-    }
-    const newCookie = await Cookie.create(req.body);
-    res.status(201).json(newCookie);
-  } catch (error) {
-    next(error);
-  }
-};
-
 exports.cookieList = async (req, res, next) => {
   try {
     const cookies = await Cookie.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
+      attributes: { exclude: ["bakeryId", "createdAt", "updatedAt"] },
+
+      include: {
+        model: Bakery,
+        as: "bakery",
+        attributes: ["name"],
+      },
     });
     res.json(cookies);
   } catch (error) {

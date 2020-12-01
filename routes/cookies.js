@@ -30,9 +30,6 @@ router.get("/", cookieList);
 // Cookie Delete
 router.delete("/:cookieId", cookieDelete);
 
-// Cookie Create
-router.post("/", upload.single("image"), cookieCreate);
-
 // Cookie Update
 router.put("/:cookieId", upload.single("image"), cookieUpdate);
 

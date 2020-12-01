@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const bakeryRoutes = require("./routes/bakeries");
 const cookieRoutes = require("./routes/cookies");
 const db = require("./db/models");
 const path = require("path");
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
+app.use("/bakeries", bakeryRoutes);
 app.use("/cookies", cookieRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
 
