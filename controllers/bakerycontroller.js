@@ -1,4 +1,4 @@
-const { Bakery, Cookie } = require("../db/models");
+const { Bakery, Cookie, User } = require("../db/models");
 
 exports.bakeryCreate = async (req, res, next) => {
   try {
@@ -21,6 +21,11 @@ exports.bakeryList = async (req, res, next) => {
           model: Cookie,
           as: "cookies",
           attributes: ["id"],
+        },
+        {
+          model: User,
+          as: "users",
+          attributes: ["username"],
         },
       ],
     });

@@ -45,6 +45,16 @@ db.Sequelize = Sequelize;
 
 // Relations
 
+// User has one Bakery
+db.User.hasOne(db.Bakery, {
+  as: "bakery",
+});
+
+//Bakery belongs to one User
+db.Bakery.belongsTo(db.User, {
+  as: "users",
+});
+
 //Bakery has many Cookies
 db.Bakery.hasMany(db.Cookie, {
   as: "cookies",
