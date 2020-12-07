@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const bakeryRoutes = require("./routes/bakeries");
 const cookieRoutes = require("./routes/cookies");
+const userRoutes = require("./routes/users");
 const db = require("./db/models");
 const path = require("path");
 
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use("/bakeries", bakeryRoutes);
 app.use("/cookies", cookieRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
+app.use(userRoutes);
 
 //NOT FOUND PATH MIDDLEWARE
 app.use((req, res, next) => {
