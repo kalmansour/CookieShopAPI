@@ -6,12 +6,16 @@ const cookieRoutes = require("./routes/cookies");
 const userRoutes = require("./routes/users");
 const db = require("./db/models");
 const path = require("path");
+const passport = require("passport");
+const { localStrategy } = require("./middleware/passport");
 
 const app = express();
 
 //Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(passport.initialize()); //Passport setup
+passport.use(localStrategy); //Passport strategies
 
 // Routes
 app.use("/bakeries", bakeryRoutes);
