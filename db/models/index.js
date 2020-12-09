@@ -48,11 +48,12 @@ db.Sequelize = Sequelize;
 // User has one Bakery
 db.User.hasOne(db.Bakery, {
   as: "bakery",
+  foreignKey: "userId",
 });
 
 //Bakery belongs to one User
 db.Bakery.belongsTo(db.User, {
-  as: "users",
+  as: "user",
 });
 
 //Bakery has many Cookies
