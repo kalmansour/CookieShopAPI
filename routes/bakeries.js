@@ -8,6 +8,20 @@ const {
 } = require("../controllers/bakeryController");
 const upload = require("../middleware/multer");
 
+//Param Middleware
+router.param("bakeryId", async (req, res, next, bakeryId) => {
+  const bakery = await fetchbakery(bakeryId, next);
+  if (bakery) {
+    req.bakery = bakery;
+    next();
+  } else {
+    const err = new Error("Bakery Not Found");
+    err.status = 404;
+    next(err);
+  }
+  // console.log(`The value of bakeryId is ${bakeryId}`);
+});
+
 // Bakery List
 router.get("/", bakeryList);
 

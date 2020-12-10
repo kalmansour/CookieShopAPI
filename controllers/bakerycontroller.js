@@ -2,6 +2,14 @@ const { Bakery, Cookie, User } = require("../db/models");
 
 exports.bakeryCreate = async (req, res, next) => {
   try {
+    const foundBakery = Bakery.findOne({
+      where: { userId: req.user.id },
+    });
+    if (foundBakery) {
+      const err = new Error("You already have a Bakery dude");
+      err.status = 404;
+      next(err);
+    }
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
