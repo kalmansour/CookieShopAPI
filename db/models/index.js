@@ -3,6 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
+const Order = require("./Order");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
@@ -44,6 +45,24 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 // Relations
+
+//Order has many Cookies
+db.Order.belongsToMany(db.Cookie, {
+  through: db.OrderItem,
+  foreignKey: "orderId",
+});
+
+//Cookie has many Orders
+db.Cookie.belongsToMany(db.Order, {
+  through: db.OrderItem,
+  foreignKey: "cookieId",
+});
+
+//User has many Orders
+db.User.hasMany(db.Order, { as: "orders", foreignKey: "userId" });
+
+//Order belongs to one User
+db.Order.belongsTo(db.User, { as: "user" });
 
 // User has one Bakery
 db.User.hasOne(db.Bakery, {

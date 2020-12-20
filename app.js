@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const bakeryRoutes = require("./routes/bakeries");
 const cookieRoutes = require("./routes/cookies");
 const userRoutes = require("./routes/users");
+const orderRoutes = require("./routes/orders");
 const db = require("./db/models");
 const path = require("path");
 const passport = require("passport");
@@ -24,6 +25,7 @@ app.use("/bakeries", bakeryRoutes);
 app.use("/cookies", cookieRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
 app.use(userRoutes);
+app.use(orderRoutes);
 
 //NOT FOUND PATH MIDDLEWARE
 app.use((req, res, next) => {
