@@ -29,7 +29,7 @@ exports.bakeryList = async (req, res, next) => {
         {
           model: Cookie,
           as: "cookies",
-          attributes: ["id"],
+          attributes: ["id", "name", "slug", "image", "description", "price"],
         },
         {
           model: User,
