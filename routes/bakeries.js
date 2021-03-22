@@ -34,6 +34,11 @@ router.post(
 );
 
 // Cookie Create
-router.post("/:bakeryId/cookies", upload.single("image"), cookieCreate);
+router.post(
+  "/:bakeryId/cookies",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  cookieCreate
+);
 
 module.exports = router;

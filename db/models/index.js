@@ -82,6 +82,9 @@ db.Bakery.hasMany(db.Cookie, {
 });
 
 // Cookie belongs to Bakery
-db.Cookie.belongsTo(db.Bakery, { as: "bakery" });
+db.Cookie.belongsTo(db.Bakery, {
+  as: "bakery",
+  foreignKey: { fieldName: "bakeryId" },
+});
 
 module.exports = db;

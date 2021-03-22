@@ -1,7 +1,4 @@
-let cookies = require("../cookies");
 const { Bakery, Cookie } = require("../db/models");
-const slugify = require("slugify");
-const { response } = require("express");
 
 exports.fetchCookie = async (cookieId, next) => {
   try {
